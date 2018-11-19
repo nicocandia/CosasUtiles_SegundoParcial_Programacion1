@@ -596,43 +596,41 @@ LinkedList* ll_filter(LinkedList*this,int (*pFunc)(void*))
     return newList;
 }
 
-int ll_map(LinkedList* this, void (*pFunc)(void*))
+Node* ll_startIterator(LinkedList* this)
+{
+    Node*retorno=NULL;
+    if(this != NULL)
+    {
+        this->nodeIterator=this->pFirstNode;
+        retorno=this->nodeIterator;
+    }
+    return retorno;
+}
+
+Node* ll_getNextIterator(LinkedList* this)
+{
+    Node* retorno=NULL;
+    if(this->nodeIterator != NULL)
+    {
+        this->nodeIterator=(this->nodeIterator)->pNextNode;
+        retorno=this->nodeIterator;
+    }
+    return retorno;
+}
+
+int ll_map (LinkedList* this,void (*pFunc)(void*))
 {
     int retorno=-1;
-    int len=ll_len(this);
-    Node*nodo;
-
-    if(this!=NULL && pFunc!=NULL && len>0)
+    Node* nodo;
+    if(this != NULL && pFunc != NULL)
     {
-        nodo=ll_startIterator(this);
+        nodo = ll_startIterator(this);
         while(nodo!=NULL)
-            {
-                pFunc(nodo->pElement);
-                nodo=ll_getNextIterator(this);
-                retorno=0;
-            }
+        {
+            pFunc(nodo->pElement);
+            nodo=ll_getNextIterator(this);
+            retorno=0;
+        }
     }
-
- return retorno;
-}
-
-Node* ll_startIterator(LinkedList*this)
-{
-	Node*retorno=NULL;
-	if(this!=NULL)
-	{
-		this->nodeIterator=this->pFirstNode;
-		retorno=this->nodeIterator;
-	}
-	return retorno;
-}
-
-Node* ll_getNextIterator(LinkedList*this)
-{
-	Node*retorno=this->nodeIterator;
-	if(this!=NULL && retorno!=NULL)
-	{
-		retorno=retorno->pNextNode;
-	}
-	return retorno;
+    return retorno;
 }
