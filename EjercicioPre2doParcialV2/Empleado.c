@@ -140,8 +140,26 @@ int Empleado_getNombre(Empleado* this,char* nombre)
 
 void em_calcularSueldo(void* p)
 {
-    int horasBuffer;
-    Empleado_getHorasTrabajadas(p,&horasBuffer);
-    Empleado_setSueldo(p,horasBuffer*2);
+    int horas;
+    int sueldo;
+    Empleado_getHorasTrabajadas(p,&horas);
+
+    if(horas>=120)
+    {
+        sueldo=horas*180;
+        if(horas<160)
+        {
+            sueldo=sueldo +(horas-120)*240;
+        }else
+        {
+          sueldo=sueldo+(horas-160)*350+ 40*240;
+        }
+
+    }
+    else
+    {
+        sueldo=horas*180;
+    }
+    Empleado_setSueldo(p,sueldo);
 }
 
