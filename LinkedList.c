@@ -634,3 +634,25 @@ int ll_map (LinkedList* this,void (*pFunc)(void*))
     }
     return retorno;
 }
+
+LinkedList* ll_filterVersion2(LinkedList*this,int (*pFunc)(void*,int entero),int numero)
+{
+    int i;
+    LinkedList*newList=NULL;
+    int len=ll_len(this);
+    void*pElement;
+
+    if(this!=NULL && pFunc!=NULL && len>0)
+    {
+        newList=ll_newLinkedList();
+        for(i=0;i<len;i++)
+        {
+            pElement=ll_get(this,i);
+            if(pFunc(pElement,numero)>0)
+            {
+                ll_add(newList,pElement);
+            }
+        }
+    }
+    return newList;
+}
